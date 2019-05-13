@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta content="width=device-width, initial-scale=1.0" name="viewport">
+        <meta content="ie=edge" http-equiv="X-UA-Compatible">
+        <title>Document</title>
+
+        <style>
+            html,
+            body {
+                margin: 0;
+                padding: 0;
+            }
+
+            .box {
+                width: 100px;
+                height: 100px;
+                background-color: chocolate;
+                margin: auto;
+            }
+        </style>
+
+    </head>
+
+    <body>
+        <div class="box">Box</div>
+        <div class="box">Box</div>
+        <div class="box">Box</div>
+        <div class="box">Box</div>
+        <div class="box">Box</div>
+        <div class="box">Box</div>
+        <div class="box">Box</div>
+
+        <script src="animator.js"></script>
+        <script>
+            var boxes = document.getElementsByClassName("box");
+
+            // animator.moveHorizontally(boxes[0], 100);
+            // animator.moveHorizontally(boxes[1], 100, -5);
+            // animator.moveHorizontally(boxes[2], -100, 5);
+            // animator.moveVertically(boxes[0], 100);
+            // animator.moveVertically(boxes[1], 100, -5);
+            // animator.moveVertically(boxes[2], -100, 5);
+            //
+            // animator.moveHorizontally(boxes[3], 200);
+            // animator.moveHorizontally(boxes[4], 200, -5);
+            // animator.moveHorizontally(boxes[5], -200, 5);
+            // animator.moveVertically(boxes[3], 200);
+            // animator.moveVertically(boxes[4], 200, -5);
+            // animator.moveVertically(boxes[5], -200, 5);
+            //
+            // animator.moveVertically(boxes[6], -600, 5);
+            //
+            // animator.rotate(boxes[0], 80);
+            // animator.rotate(boxes[1], 190, 3);
+            // animator.rotate(boxes[2], 280, 5);
+            // animator.rotate(boxes[3], -45, -1);
+            // animator.rotate(boxes[4], -1);
+            // animator.rotate(boxes[5], 1, -1);
+
+            animator.rotate(boxes[0], -1, 1, 150);
+            animator.rotate(boxes[1], 1, -1);
+            animator.rotate(boxes[2], 1, -1);
+
+            var animation = animator.getAnimation(2);
+
+            var interval = setInterval(() => {
+                animation.stop();
+                animation.parameters.step = -1 * animation.parameters.step;
+                animation.parameters.maxAngle = -1 * animation.parameters.maxAngle;
+                console.log(animation.parameters.step + " " + animation.parameters.maxAngle);
+                setTimeout(animation.resume, 1000);
+            }, 3000);
+        </script>
+    </body>
+
+</html>
