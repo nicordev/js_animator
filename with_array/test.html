@@ -37,10 +37,12 @@
         <script>
             var boxes = document.getElementsByClassName("box");
 
-            animator.moveX(boxes[0], 1, -1);
-            animator.moveX(boxes[1], -1, 1);
-            animator.moveY(boxes[0], 1, -1);
-            animator.moveY(boxes[1], -1, 1);
+            animator.rotateClockwise(boxes[0]);
+            animator.rotateCounterClockwise(boxes[1]);
+            animator.moveX(boxes[2], 1, -1);
+            animator.moveY(boxes[2], 1, -1);
+            animator.moveX(boxes[3], -1, 1);
+            animator.moveY(boxes[3], -1, 1);
         </script>
     </body>
 

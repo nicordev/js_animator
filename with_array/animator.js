@@ -19,11 +19,11 @@ var animator = {
 
     /**
      * Create a new animation object
-     * 
-     * @param {string} type 
-     * @param {DOM Element} element 
-     * @param {Object} parameters 
-     * @param {Object} state 
+     *
+     * @param {string} type
+     * @param {DOM Element} element
+     * @param {Object} parameters
+     * @param {Object} state
      */
     newAnimation: function (type, element, parameters, state) {
 
@@ -32,11 +32,16 @@ var animator = {
             type: type,
             element: element,
             parameters: parameters,
-            state: state
-        }
+            state: state,
+            nextFrame: null
+        };
         animation.state.active = true;
         animation.stop = function () {
             animation.state.active = false;
+        };
+        animation.resume = function () {
+            animation.state.active = true;
+            animation.nextFrame();
         };
         animator.animations.push(animation);
 
@@ -81,14 +86,7 @@ var animator = {
             }
         );
 
-        animation.resume = function () {
-            animation.state.active = true;
-            nextFrame();
-        };
-
-        nextFrame();
-
-        function nextFrame() {
+        animation.nextFrame = () => {
 
             element.style.transform = "rotate(" + animation.state.angle + "deg)";
             animation.state.angle += animation.parameters.step;
@@ -105,9 +103,11 @@ var animator = {
                     maxAngle < 0 && animation.state.angle >= maxAngle
                 )
             ) {
-                requestAnimationFrame(nextFrame);
+                requestAnimationFrame(animation.nextFrame);
             }
-        }
+        };
+
+        animation.nextFrame();
     },
 
     /**
@@ -153,19 +153,9 @@ var animator = {
             }
         );
 
-        animation.resume = function () {
-            animation.state.active = true;
-            nextFrame();
-        };
-
         element.style.position = "relative";
 
-        nextFrame();
-
-        /**
-         * Make changes for the next animation frame
-         */
-        function nextFrame() {
+        animation.nextFrame = () => {
 
             animation.state.x += animation.parameters.step;
 
@@ -177,7 +167,7 @@ var animator = {
                 }
 
                 if (animation.state.active && animation.state.x < animation.parameters.distance) {
-                    requestAnimationFrame(nextFrame);
+                    requestAnimationFrame(animation.nextFrame);
                 }
 
             } else {
@@ -186,10 +176,12 @@ var animator = {
                 }
 
                 if (animation.state.active && animation.state.x > animation.parameters.distance) {
-                    requestAnimationFrame(nextFrame);
+                    requestAnimationFrame(animation.nextFrame);
                 }
             }
-        }
+        };
+
+        animation.nextFrame();
     },
 
     /**
@@ -214,19 +206,9 @@ var animator = {
             }
         );
 
-        animation.resume = function () {
-            animation.state.active = true;
-            nextFrame();
-        };
-
         element.style.position = "relative";
 
-        nextFrame();
-
-        /**
-         * Make changes for the next animation frame
-         */
-        function nextFrame() {
+        animation.nextFrame = () => {
 
             animation.state.y += step;
 
@@ -238,7 +220,7 @@ var animator = {
                 }
 
                 if (animation.state.active && animation.state.y < animation.parameters.distance) {
-                    requestAnimationFrame(nextFrame);
+                    requestAnimationFrame(animation.nextFrame);
                 }
 
             } else {
@@ -247,15 +229,11 @@ var animator = {
                 }
 
                 if (animation.state.active && animation.state.y > animation.parameters.distance) {
-                    requestAnimationFrame(nextFrame);
+                    requestAnimationFrame(animation.nextFrame);
                 }
             }
-        }
+        };
+
+        animation.nextFrame();
     }
 };
-
-/*
- * TODO
- *
- * Save the animation function nextFrame in the animation object
- */
