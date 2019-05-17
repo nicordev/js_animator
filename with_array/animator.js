@@ -43,6 +43,22 @@ var animator = {
         return animation;
     },
 
+    // Animations
+
+    stopAll: function () {
+
+        for (let animation of animator.animations) {
+            animation.stop();
+        }
+    },
+
+    resumeAll: function () {
+
+        for (let animation of animator.animations) {
+            animation.resume();
+        }
+    },
+
     /**
      * Rotate a DOM element using CSS property transform and the deg unit
      *
@@ -137,6 +153,11 @@ var animator = {
             }
         );
 
+        animation.resume = function () {
+            animation.state.active = true;
+            nextFrame();
+        };
+
         element.style.position = "relative";
 
         nextFrame();
@@ -155,9 +176,7 @@ var animator = {
                     element.style.left = animation.parameters.distance + "px";
                 }
 
-                if (
-                    animation.state.x < animation.parameters.distance
-                ) {
+                if (animation.state.active && animation.state.x < animation.parameters.distance) {
                     requestAnimationFrame(nextFrame);
                 }
 
@@ -166,7 +185,7 @@ var animator = {
                     element.style.left = animation.parameters.distance + "px";
                 }
 
-                if (animation.state.x > animation.parameters.distance) {
+                if (animation.state.active && animation.state.x > animation.parameters.distance) {
                     requestAnimationFrame(nextFrame);
                 }
             }
@@ -195,6 +214,11 @@ var animator = {
             }
         );
 
+        animation.resume = function () {
+            animation.state.active = true;
+            nextFrame();
+        };
+
         element.style.position = "relative";
 
         nextFrame();
@@ -213,9 +237,7 @@ var animator = {
                     element.style.top = animation.parameters.distance + "px";
                 }
 
-                if (
-                    animation.state.y < animation.parameters.distance
-                ) {
+                if (animation.state.active && animation.state.y < animation.parameters.distance) {
                     requestAnimationFrame(nextFrame);
                 }
 
@@ -224,10 +246,16 @@ var animator = {
                     element.style.top = animation.parameters.distance + "px";
                 }
 
-                if (animation.state.y > animation.parameters.distance) {
+                if (animation.state.active && animation.state.y > animation.parameters.distance) {
                     requestAnimationFrame(nextFrame);
                 }
             }
         }
     }
 };
+
+/*
+ * TODO
+ *
+ * Save the animation function nextFrame in the animation object
+ */
