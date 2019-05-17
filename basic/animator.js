@@ -1,7 +1,7 @@
 /**
  * Object containing methods to animate DOM elements
  *
- * @type {{rotate: animator.rotate, moveVertically: animator.moveVertically, moveHorizontally: animator.moveHorizontally}}
+ * @type {{rotate: animator.rotate, moveY: animator.moveY, moveX: animator.moveX}}
  */
 var animator = {
 
@@ -46,7 +46,7 @@ var animator = {
      * @param distance
      * @param step
      */
-    moveHorizontally: function (element, distance = 0, step = 1) {
+    moveX: function (element, distance = 0, step = 1) {
 
         var x = 0;
 
@@ -107,7 +107,7 @@ var animator = {
      * @param distance
      * @param step
      */
-    moveVertically: function (element, distance = 0, step = 1) {
+    moveY: function (element, distance = 0, step = 1) {
 
         var y = 0;
 

@@ -37,21 +37,21 @@
     <script>
         var boxes = document.getElementsByClassName("box");
 
-        animator.moveHorizontally(boxes[0], 100);
-        animator.moveHorizontally(boxes[1], 100, -5);
-        animator.moveHorizontally(boxes[2], -100, 5);
-        animator.moveVertically(boxes[0], 100);
-        animator.moveVertically(boxes[1], 100, -5);
-        animator.moveVertically(boxes[2], -100, 5);
+        animator.moveX(boxes[0], 100);
+        animator.moveX(boxes[1], 100, -5);
+        animator.moveX(boxes[2], -100, 5);
+        animator.moveY(boxes[0], 100);
+        animator.moveY(boxes[1], 100, -5);
+        animator.moveY(boxes[2], -100, 5);
 
-        animator.moveHorizontally(boxes[3], 200);
-        animator.moveHorizontally(boxes[4], 200, -5);
-        animator.moveHorizontally(boxes[5], -200, 5);
-        animator.moveVertically(boxes[3], 200);
-        animator.moveVertically(boxes[4], 200, -5);
-        animator.moveVertically(boxes[5], -200, 5);
+        animator.moveX(boxes[3], 200);
+        animator.moveX(boxes[4], 200, -5);
+        animator.moveX(boxes[5], -200, 5);
+        animator.moveY(boxes[3], 200);
+        animator.moveY(boxes[4], 200, -5);
+        animator.moveY(boxes[5], -200, 5);
 
-        animator.moveVertically(boxes[6], -600, 5);
+        animator.moveY(boxes[6], -600, 5);
 
         animator.rotate(boxes[0], 80);
         animator.rotate(boxes[1], 190, 3);

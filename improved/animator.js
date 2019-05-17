@@ -1,7 +1,7 @@
 /**
  * Object containing methods to animate DOM elements
  *
- * @type {{rotate: animator.rotate, moveVertically: animator.moveVertically, moveHorizontally: animator.moveHorizontally}}
+ * @type {{rotate: animator.rotate, moveY: animator.moveY, moveX: animator.moveX}}
  */
 var animator = {
 
