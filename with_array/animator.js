@@ -49,6 +49,7 @@ var animator = {
      * @param element
      * @param maxAngle
      * @param step
+     * @param startingAngle
      */
     rotate: function (element, maxAngle = 360, step = 1, startingAngle = 0) {
 
@@ -94,19 +95,49 @@ var animator = {
     },
 
     /**
+     * Rotate an element clockwise forever
+     * 
+     * @param {DOM Element} element 
+     * @param {int} step 
+     */
+    rotateClockwise: function (element, step = 1) {
+
+        animator.rotate(element, -1, Math.abs(step));
+    },
+
+    /**
+     * Rotate an element counterclockwise forever
+     *
+     * @param {DOM Element} element
+     * @param {int} step
+     */
+    rotateCounterClockwise: function (element, step = 1) {
+
+        animator.rotate(element, 1, -(Math.abs(step)));
+    },
+
+    /**
      * Move a DOM element horizontally by setting a relative position
      *
      * @param element
      * @param distance
      * @param step
      */
-    moveHorizontally: function (element, distance = 0, step = 1) {
+    moveX: function (element, distance = 0, step = 1, startingX = 0) {
 
-        var x = 0;
+        var animation = animator.newAnimation(
+            "move_x",
+            element,
+            {
+                distance: distance,
+                step: step
+            },
+            {
+                x: startingX
+            }
+        );
 
         element.style.position = "relative";
-
-        correctStep();
 
         nextFrame();
 
@@ -115,41 +146,29 @@ var animator = {
          */
         function nextFrame() {
 
-            x += step;
+            animation.state.x += animation.parameters.step;
 
-            element.style.left = x + "px";
+            element.style.left = animation.state.x + "px";
 
-            if (distance >= 0) {
-                if (x > distance) {
-                    element.style.left = distance + "px";
+            if (animation.parameters.distance >= 0) {
+                if (animation.state.x > animation.parameters.distance) {
+                    element.style.left = animation.parameters.distance + "px";
                 }
 
                 if (
-                    x < distance
+                    animation.state.x < animation.parameters.distance
                 ) {
                     requestAnimationFrame(nextFrame);
                 }
 
             } else {
-                if (x < distance) {
-                    element.style.left = distance + "px";
+                if (animation.state.x < animation.parameters.distance) {
+                    element.style.left = animation.parameters.distance + "px";
                 }
 
-                if (x > distance) {
+                if (animation.state.x > animation.parameters.distance) {
                     requestAnimationFrame(nextFrame);
                 }
-            }
-        }
-
-        /**
-         * Correct the step sign to avoid infinite move
-         */
-        function correctStep() {
-
-            if (distance >= 0) {
-                step = Math.abs(step);
-            } else {
-                step = -(Math.abs(step));
             }
         }
     },
@@ -160,14 +179,23 @@ var animator = {
      * @param element
      * @param distance
      * @param step
+     * @param startingY
      */
-    moveVertically: function (element, distance = 0, step = 1) {
+    moveY: function (element, distance = 0, step = 1, startingY = 0) {
 
-        var y = 0;
+        var animation = animator.newAnimation(
+            "move_y",
+            element,
+            {
+                distance: distance,
+                step: step
+            },
+            {
+                y: startingY
+            }
+        );
 
         element.style.position = "relative";
-
-        correctStep();
 
         nextFrame();
 
@@ -176,41 +204,29 @@ var animator = {
          */
         function nextFrame() {
 
-            y += step;
+            animation.state.y += step;
 
-            element.style.top = y + "px";
+            element.style.top = animation.state.y + "px";
 
-            if (distance >= 0) {
-                if (y > distance) {
-                    element.style.top = distance + "px";
+            if (animation.parameters.distance >= 0) {
+                if (animation.state.y > animation.parameters.distance) {
+                    element.style.top = animation.parameters.distance + "px";
                 }
 
                 if (
-                    y < distance
+                    animation.state.y < animation.parameters.distance
                 ) {
                     requestAnimationFrame(nextFrame);
                 }
 
             } else {
-                if (y < distance) {
-                    element.style.top = distance + "px";
+                if (animation.state.y < animation.parameters.distance) {
+                    element.style.top = animation.parameters.distance + "px";
                 }
 
-                if (y > distance) {
+                if (animation.state.y > animation.parameters.distance) {
                     requestAnimationFrame(nextFrame);
                 }
-            }
-        }
-
-        /**
-         * Correct the step sign to avoid infinite move
-         */
-        function correctStep() {
-
-            if (distance >= 0) {
-                step = Math.abs(step);
-            } else {
-                step = -(Math.abs(step));
             }
         }
     }
